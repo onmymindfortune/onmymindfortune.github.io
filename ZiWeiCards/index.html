@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>紫微抽牌</title><link rel="icon" type="image/png" href="images/Logo/logo_circle.png" />
+    <style>
+        
+
+        /* 單張卡片：直向置中圖片＋文字 */
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+        }
+
+        /* 文字水平置中 */
+        .card p {
+            text-align: center;
+            margin: 8px 0 0;
+            font-size: 14px;
+            white-space: pre-line;
+        }
+
+        .card img {
+            width: 150px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        
+        /* 牌卡樣式 */
+        #cardContainer {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        /* 共用卡片樣式 */
+        #cardContainer .card {
+        text-align: center;
+        margin: 8px;
+        margin: 0 8px;   /* 卡片間距 */
+        }
+
+        /* 三種簡單牌陣共用 */
+        #cardContainer.single,
+        #cardContainer.two,
+        #cardContainer.basicThree {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+        #cardContainer.two,
+        #cardContainer.basicThree {
+            align-content: center;     /* 垂直置中整個 grid */
+            align-items: center;       /* 垂直置中每個子項目 */
+        }
+        
+        /* 4. 對宮 */
+        #cardContainer.opposition {
+        display: flex;
+        justify-content: center;   /* 全部置中 */
+        align-items: center;       /* 垂直置中 */
+        gap: 32px;                 /* 三組之間要有空隙 */
+        }
+        #cardContainer.opposition .group1,
+        #cardContainer.opposition .group2,
+        #cardContainer.opposition .life {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;                  /* 同組卡片之間要有空隙 */
+        }
+
+        /* 5. 三方四正：Grid 版 */
+        #cardContainer.threeFour {
+        display: grid;
+        width: 100%;
+        max-width: 1000px;      /* 依需求調整最大寬度 */
+        margin: 0 auto;
+        /* 四欄三列：col1 空白｜col2 top/空格 ｜col3 空白｜col4 life */
+        grid-template-columns: 1fr auto 1fr auto;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            ".       top     life   ."
+            "left    .       right  ."
+            ".       bottom  .      .";
+        gap: 20px;             /* 群組間距 */
+        justify-items: center;
+        align-items: center;
+        justify-content: center;    /* 將整個 grid 块置中 */
+        justify-items: center;      /* 將每個子項目置中 */
+        }
+
+        #cardContainer.threeFour .group-top {
+        grid-area: top;
+        display: flex;
+        gap: 8px;              /* 同組內兩張卡的間距 */
+        }
+        #cardContainer.threeFour .group-bottom {
+        grid-area: bottom;
+        display: flex;
+        gap: 8px;
+        }
+        #cardContainer.threeFour .group-left {
+        grid-area: left;
+        display: flex;
+        gap: 8px;
+        }
+        #cardContainer.threeFour .group-right {
+        grid-area: right;
+        display: flex;
+        gap: 8px;
+        }
+        #cardContainer.threeFour .group-life {
+        grid-area: life;
+        display: flex;
+        justify-content: center;
+        }
+        
+        #cardContainer.threeFour {
+            grid-template-columns: 1fr auto 1fr auto !important;
+            grid-template-rows: auto auto auto   !important;
+        }
+
+
+
+        
+        /* 6. 十二宮位 */
+        #twelveContainer.twelve {
+            display: grid;
+            width: 1200px;
+            height: 1200px;     /* 視底圖而定 */
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows:    repeat(5, 1fr);
+            gap: 20px;       
+            justify-items: center;
+            align-items: center;
+            margin: 0 auto;
+            justify-content: center;    /* 將整個 grid 块置中 */
+            justify-items: center;      /* 將每個子項目置中 */
+        }
+
+        /* 外圍十二宮對應格位 */
+        #twelveContainer.twelve .pos1  { grid-area: 1 / 1; }
+        #twelveContainer.twelve .pos2  { grid-area: 1 / 2; }
+        #twelveContainer.twelve .pos3  { grid-area: 1 / 3; }
+        #twelveContainer.twelve .pos4  { grid-area: 1 / 4; }
+        #twelveContainer.twelve .pos5  { grid-area: 2 / 1; }
+        #twelveContainer.twelve .pos6  { grid-area: 2 / 4; }
+        #twelveContainer.twelve .pos7  { grid-area: 3 / 1; }
+        #twelveContainer.twelve .pos8  { grid-area: 3 / 4; }
+        #twelveContainer.twelve .pos9  { grid-area: 4 / 1; }
+        #twelveContainer.twelve .pos10 { grid-area: 4 / 2; }
+        #twelveContainer.twelve .pos11 { grid-area: 4 / 3; }
+        #twelveContainer.twelve .pos12 { grid-area: 4 / 4; }
+
+        /* 中央兩張：主星在(3,3)，長生在(3,4) */
+        #twelveContainer.twelve .center-main {
+        grid-area: 3 / 2;
+        }
+        #twelveContainer.twelve .center-life {
+        grid-area: 3 / 3;
+        }
+
+        /* 每組內部並排 */
+        #twelveContainer.twelve .group-pos,
+        #twelveContainer.twelve .center-main,
+        #twelveContainer.twelve .center-life {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 卡片尺寸 */
+        #twelveContainer.twelve img {
+        width: 150px; /* 可調 */
+        height: auto;
+        }
+
+        /* border
+        /* box-sizing: border-box;    
+        /* 2. 如果想要每個格子也有框線，就針對 group-pos 加 */
+        #twelveContainer.twelve .group-pos {
+        border: 1px solid #000000;      /* 格子內框 */
+        
+        }
+
+        /* 3. 中央那兩格也可以同理 */
+        #twelveContainer.twelve .center-main,
+        #twelveContainer.twelve .center-life {
+        outline: 1px dashed  #000000;    /* 或用 outline，不會佔空間 */
+        }
+
+        /* 有邊框的格子 */
+        #twelveContainer.twelve .group-pos {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #000;
+
+        /* 內部用 flex 置中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        /* 中央那兩格 */
+        #twelveContainer.twelve .center-main,
+        #twelveContainer.twelve .center-life {
+        width: 100%;
+        height: 100%;
+        outline: 1px dashed #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+
+
+
+
+
+
+    </style>
+</head>
+
+
+<header style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+    <!-- logo 圖片 -->
+    <img src="images/Logo/logo.png" alt="沐心 Logo" style="height:40px; width:auto;" />
+    <!-- 頁面標題 -->
+    <h1 >紫微牌卡-線上抽牌 </h1>
+    <a href="https://www.instagram.com/onmymind.fortune/"> 沐心紫微</a>
+</header>
+
+<body>
+    
+    <p>
+    <!-- 1) 牌陣選擇 -->
+    <label  for="spreadSelector" style="font-size: 20px">選擇牌陣：</label>
+    <select id="spreadSelector" style="font-size: 20px">
+        <option value="single">一張牌陣 (1主星牌)</option>
+        <option value="two">二張牌陣 (1主+1輔)</option>
+        <option value="basicThree">三張牌陣 (1主+1輔+1長)</option>
+        <option value="opposition">對宮牌陣 (2主+2輔+1長)</option>
+        <option value="threeFour">三方四正牌陣 (4主+4輔+1長)</option>
+        <option value="twelve">十二宮位大牌陣 (13主+12輔+1長)</option>
+    </select>
+
+    <!-- 2) 抽牌按鈕 -->
+    <button onclick="showRandomContent()" style="font-size: 20px">抽牌</button>
+    
+    <div style="font-size: 16px;">
+        <p>說明：<br>
+        1. 一張牌陣：隨機抽取一張主星牌。<br>
+        2. 二張牌陣：隨機抽取一張主星牌及一張輔星牌。<br>        
+        3. 基本三張牌陣：隨機抽取三張牌，一張主星牌、一張輔星牌及一張長生牌。<br>
+        4. 對宮牌陣：隨機抽取二張主星牌、二張輔星牌及一張長生牌。<br>
+        5. 三方四正牌陣：隨機抽取四張牌主星牌、四張輔星牌、一張長生牌，分別為命宮(下)、官祿宮(左)、遷移宮(上)及財帛宮(右)。<br>
+        6. 十二宮位大牌陣：隨機抽取十二張主星牌、十二張輔星牌、一張身宮主星牌及一張長生牌。<br>
+        </p>
+    </div>
+    <div >
+        <p>
+        <br>
+        </p>   
+    </div>
+    <!-- <div>
+        <label for="cardCount">抽取張數：</label>
+        <input type="number" id="cardCount" value="1" min="1" max="12">
+    </div> -->
+
+    <div id="cardContainer" 
+    style="display: grid; grid-template-columns: repeat(5, 1fr); 
+    gap: 0px;"></div>
+    
+    <div id="twelveContainer" style="display: none;"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
