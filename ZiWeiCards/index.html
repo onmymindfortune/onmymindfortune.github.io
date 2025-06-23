@@ -245,12 +245,15 @@
         justify-content: center;
         align-items: center;
         }
-
-
-
-
-
-
+        button {
+            padding: 5px 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
 
     </style>
 </head>
@@ -266,7 +269,6 @@
 
 <body>
     
-    <p>
     <!-- 1) 牌陣選擇 -->
     <label  for="spreadSelector" style="font-size: 20px">選擇牌陣：</label>
     <select id="spreadSelector" style="font-size: 20px">
@@ -281,20 +283,6 @@
     <!-- 2) 抽牌按鈕 -->
     <button onclick="showRandomContent()" style="font-size: 20px">抽牌</button>
     
-    <div style="font-size: 16px;">
-         <p>
-        </p>
-    </div>
-    <div >
-        <p>
-        <br>
-        </p>   
-    </div>
-    <!-- <div>
-        <label for="cardCount">抽取張數：</label>
-        <input type="number" id="cardCount" value="1" min="1" max="12">
-    </div> -->
-
     <div id="cardContainer" 
     style="display: grid; grid-template-columns: repeat(5, 1fr); 
     gap: 0px;"></div>
