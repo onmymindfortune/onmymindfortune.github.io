@@ -300,4 +300,3 @@ function showRandomContent() {
         createCard(container, "3Life",    lifes[0]);
     }
 }
- 
