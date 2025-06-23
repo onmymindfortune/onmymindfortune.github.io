@@ -64,13 +64,33 @@
             align-content: center;     /* 垂直置中整個 grid */
             align-items: center;       /* 垂直置中每個子項目 */
         }
+
+        /* 一張牌陣：放大到 200px 寬 */
+        #cardContainer.single .card img {
+            width: 350px;
+            height: auto;
+        }
         
+        /* 兩張牌陣：放大到 180px 寬 */
+        #cardContainer.two .card img {
+            width: 300px;
+            height: auto;
+        }
+        
+        /* 三張牌陣（basicThree）：放大到 160px 寬 */
+        #cardContainer.basicThree .card img {
+            width: 250px;
+            height: auto;
+        }
+
+        
+
         /* 4. 對宮 */
         #cardContainer.opposition {
         display: flex;
         justify-content: center;   /* 全部置中 */
         align-items: center;       /* 垂直置中 */
-        gap: 32px;                 /* 三組之間要有空隙 */
+        gap: 2px;                 /* 三組之間要有空隙 */
         }
         #cardContainer.opposition .group1,
         #cardContainer.opposition .group2,
@@ -79,6 +99,8 @@
         flex-direction: row;
         gap: 8px;                  /* 同組卡片之間要有空隙 */
         }
+
+        
 
         /* 5. 三方四正：Grid 版 */
         #cardContainer.threeFour {
