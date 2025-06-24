@@ -1,7 +1,6 @@
-# ZiWeiCards — 紫微牌卡線上抽牌
+# [ZiWeiCards — 紫微牌卡線上抽牌](https://onmymindfortune.github.io/ZiWeiCards/)
 
 純前端實作的紫微牌卡隨機抽牌小應用，開啟瀏覽器即可體驗正／倒牌解讀。
-[紫微牌卡-線上抽牌](https://onmymindfortune.github.io/ZiWeiCards/)
 
 ## 功能特色
 
