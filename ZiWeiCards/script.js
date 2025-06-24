@@ -300,3 +300,13 @@ function showRandomContent() {
         createCard(container, "3Life",    lifes[0]);
     }
 }
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('updateDate');
+    // 取最後修改時間，轉成台灣格式 yyyy/MM/dd
+    const lastMod = new Date(document.lastModified);
+    el.textContent = lastMod.toLocaleDateString('zh-TW', {
+      year: 'numeric', month: '2-digit', day: '2-digit'
+    });
+  });
