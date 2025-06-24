@@ -44,22 +44,6 @@
     transition: transform .1s, box-shadow .2s;
 }
 
-#drawBtn:hover,
-#shuffleBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-button {
-    padding: 5px 10px;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
 button+button {
     margin-left: 10px;
 }
@@ -70,16 +54,64 @@ button+button {
     margin-left: 10px;
 }
 
-/* 區分按鈕色彩 */
-#drawBtn {
-    background-color: #4CAF50;
-    /* 綠 */
+/* 按鈕共用基礎樣式 */
+button {
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: tranmargin-left: 8px;
+    sform .1s,
+    box-shadow .2s,
+    background-color .2s;
+
 }
 
-#shuffleBtn {
-    background-color: #f57c00;
-    /* 橘色 */
+/* 抽牌（綠色） */
+#drawBtn {
+    background-color: #4CAF50;
+    margin-left: 8px;
 }
+
+#drawBtn:hover {
+    background-color: #66BB6A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 洗牌（橘色） */
+#shuffleBtn {
+    background-color: #FF9800;
+}
+
+#shuffleBtn:hover {
+    background-color: #FFB74D;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 儲存畫面（灰色） */
+#saveBtn {
+    background-color: #607D8B;
+}
+
+#saveBtn:hover {
+    background-color: #78909C;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+
+
+
+
+
+
+
 .hint {
     font-size: 0.8rem;
     color: #888;
@@ -191,7 +223,8 @@ h1 a:hover {
 /* 牌卡樣式 */
 #cardContainer {
     position: relative;
-    width: 100%;
+    width: auto;
+    height: auto;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -345,7 +378,6 @@ h1 a:hover {
 #twelveContainer.twelve {
     position: relative;
     width: 1375px;
-    /* 與底圖尺寸同寬高 */
     height: 1144px;
     margin: 0 auto;
     background: url('images/Spreads/十二宮位大牌陣.png') no-repeat center/contain;
