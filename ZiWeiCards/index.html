@@ -13,47 +13,54 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<header class="site-header" style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
-    <div class="logo-title">
-        <!-- logo 圖片 -->
-        <img src="images/Logo/logo.png" alt="沐心 Logo" style="height:50px; width:auto;" />
-        <!-- 頁面標題 -->
-        <h1>紫微牌卡-線上抽牌
-            <a href="https://www.instagram.com/onmymind.fortune/" target="_blank"> 沐心紫微</a>
+<body>
+    <script src="script.js"></script>
+    <!-- 引入截圖函式庫 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-            <body>
-        </h1>
+
+    <header class="site-header" style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+        <div class="logo-title">
+            <!-- logo 圖片 -->
+            <img src="images/Logo/logo.png" alt="沐心 Logo" style="height:50px; width:auto;" />
+            <!-- 頁面標題 -->
+            <h1>紫微牌卡-線上抽牌
+                <a href="https://www.instagram.com/onmymind.fortune/" target="_blank"> 沐心紫微</a>
+
+            </h1>
+        </div>
+        <div class="update-header">
+            最後更新日期：2025/06/24
+        </div>
+    </header>
+
+
+
+    <div class="control-bar">
+
+        <label for="spreadSelector">選擇牌陣：</label>
+        <select id="spreadSelector" onchange="showRandomContent(true)">
+            <option value="single">【一張】牌陣 (1主星牌)</option>
+            <option value="two">【二張】牌陣 (1主+1輔)</option>
+            <option value="basicThree" selected>【三張】基礎牌陣 (1主+1輔+1長)</option>
+            <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
+            <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
+            <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)</option>
+        </select>
+        <button id="drawBtn" onclick="showRandomContent()">抽牌</button>
+        <span class="divider">｜</span>
+        <button id="shuffleBtn" onclick="shufflePreview()">洗牌</button>
+        <!-- <small class="hint">(重新洗牌)</small> -->
+        <span class="divider">｜</span>
+        <button id="saveBtn" onclick="saveCardScreen()">儲存畫面</button>
+
+
+
     </div>
-    <div class="update-header">
-        最後更新日期：2025/06/24
+    <div class="card-wrapper">
+        <div id="cardContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;"></div>
+        <div id="twelveContainer" style="display: none;"></div>
     </div>
-</header>
-
-
-<div class="control-bar">
-
-    <label for="spreadSelector">選擇牌陣：</label>
-    <select id="spreadSelector" onchange="showRandomContent(true)">
-        <option value="single">【一張】牌陣 (1主星牌)</option>
-        <option value="two">【二張】牌陣 (1主+1輔)</option>
-        <option value="basicThree" selected>【三張】基礎牌陣 (1主+1輔+1長)</option>
-        <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
-        <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
-        <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)</option>
-    </select>
-    <button id="drawBtn" onclick="showRandomContent()">抽牌</button>
-    <span class="divider">｜</span>
-    <button id="shuffleBtn" onclick="shufflePreview()">洗牌</button>
-    <small class="hint">(重新洗牌)</small>
-
-</div>
-<div class="card-wrapper">
-    <div id="cardContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;"></div>
-    <div id="twelveContainer" style="display: none;"></div>
-</div>
-
-
-<script src="script.js"></script>
 </body>
 
 </html>
