@@ -452,3 +452,29 @@ button {
     border: none;
     border-radius: 5px;
 }
+
+/* 確保 header 可以定位內部絕對定位元素 */
+.site-header {
+    position: relative;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 原 logo + 標題 區塊 */
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 更新日期 區塊，絕對定位到右上 */
+.update-header {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.8rem;
+    color: #777;
+}
