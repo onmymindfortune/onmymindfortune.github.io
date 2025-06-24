@@ -186,167 +186,14 @@ function createCard(parent, folder, card) {
     const img = document.createElement("img");
     img.src = `images/${folder}/${card.image}`;
     const p = document.createElement("p");
-    p.textContent = card.text.replace('-', '\n');
+    if (folder == "Common"){
+        p.textContent = card.text.replace('-', '\n\n');
+    }else{
+        p.textContent = card.text.replace('-', '\n');
+    }
     d.append(img, p);
     parent.append(d);
 }
-
-// function showRandomContent() {
-//     const key = document.getElementById("spreadSelector").value;
-//     const cardCt = document.getElementById("cardContainer");
-//     const twelveCt = document.getElementById("twelveContainer");
-
-//     // 清空並隱藏
-//     cardCt.innerHTML = "";
-//     twelveCt.innerHTML = "";
-//     cardCt.style.display   = "none";
-//     twelveCt.style.display = "none";
-
-//     // 洗牌
-//     const mainShuffled    = shuffle(contentMain);
-//     const supportShuffled = shuffle(contentSupport);
-//     const lifeShuffled    = shuffle(contentLife);
-
-//     // 取牌（不重複正/倒）
-//     const spread = spreads[key];
-//     // 主星與額外
-//     const mainCount = spread.main + spread.extra;
-//     const uniqueMain = dealUnique(mainShuffled, mainCount);
-//     const mains = uniqueMain.slice(0, spread.main);
-//     const extraCard = spread.extra > 0 ? uniqueMain[spread.main] : null;
-//     // 輔星
-//     const sups = spread.support > 0
-//         ? dealUnique(supportShuffled, spread.support)
-//         : [];
-//     // 長生
-//     const lifes = spread.life > 0
-//         ? dealUnique(lifeShuffled, spread.life)
-//         : [];
-
-//     // 選擇容器並顯示
-//     let container;
-//     if (key === "twelve") {
-//         container = twelveCt;
-//         twelveCt.style.display = "grid";
-//         twelveCt.className = key;
-//     } else if (key === "threeFour") {
-//         container = cardCt;
-//         cardCt.style.display = "grid";
-//         cardCt.className = key;
-//     } else {
-//         container = cardCt;
-//         cardCt.style.display = "flex";
-//         cardCt.className = key;
-//     }
-
-//     // 依牌陣組合 DOM
-//     if (key === "twelve") {
-//         // 十二宮位：12 組 + 中央主星 + 中央長生
-//         for (let i = 0; i < 12; i++) {
-//             const g = document.createElement("div");
-//             g.className = `group group-pos pos${i+1}`;
-//             createCard(g, "1Main",     mains[i]);
-//             createCard(g, "2Support",  sups[i]);
-//             container.append(g);
-//         }
-//         // 中央主星
-//         const cm = document.createElement("div");
-//         cm.className = "center-main";
-//         createCard(cm, "1Main", extraCard);
-//         // 中央長生
-//         const cl = document.createElement("div");
-//         cl.className = "center-life";
-//         createCard(cl, "3Life", lifes[0]);
-//         container.append(cm, cl);
-//     }
-//     else if (key === "opposition") {
-//         // 對宮：2 主 + 2 輔 + 1 長
-//         const gm = document.createElement("div");
-//         gm.className = "group-main";
-//         mains.forEach(c => createCard(gm, "1Main", c));
-//         const gs = document.createElement("div");
-//         gs.className = "group-support";
-//         sups.forEach(c => createCard(gs, "2Support", c));
-//         const gl = document.createElement("div");
-//         gl.className = "group-life";
-//         createCard(gl, "3Life", lifes[0]);
-//         container.append(gm, gs, gl);
-//     }
-//     else if (key === "threeFour") {
-//         // 三方四正：4 組 (主+輔) + 1 長
-//         ["top","right","bottom","left"].forEach((pos,i) => {
-//             const g = document.createElement("div");
-//             g.className = `group group-${pos}`;
-//             createCard(g, "1Main",    mains[i]);
-//             createCard(g, "2Support", sups[i]);
-//             container.append(g);
-//         });
-//         const gl = document.createElement("div");
-//         gl.className = "group-life";
-//         createCard(gl, "3Life", lifes[0]);
-//         container.append(gl);
-//     }
-//     else if (key === "single") {
-//         // 一張：1 主
-//         createCard(container, "1Main", mains[0]);
-//     }
-//     else if (key === "two") {
-//         // 二張：1 主 + 1 輔
-//         createCard(container, "1Main",    mains[0]);
-//         createCard(container, "2Support", sups[0]);
-//     }
-//     else if (key === "basicThree") {
-//         // 基本三張：1 主 + 1 輔 + 1 長
-//         createCard(container, "1Main",    mains[0]);
-//         createCard(container, "2Support", sups[0]);
-//         createCard(container, "3Life",    lifes[0]);
-//     }
-// }
-
-function showBackPreview() {
-    const key = document.getElementById("spreadSelector").value;
-    const cardCt = document.getElementById("cardContainer");
-    const twelveCt = document.getElementById("twelveContainer");
-
-    // 清空容器
-    cardCt.innerHTML = "";
-    twelveCt.innerHTML = "";
-    cardCt.style.display   = "none";
-    twelveCt.style.display = "none";
-
-    const spread = spreads[key];
-    const totalCount = spread.main + spread.support + spread.life + (spread.extra || 0);
-
-    // 選擇容器
-    let container;
-    if (key === "twelve") {
-        container = twelveCt;
-        twelveCt.style.display = "grid";
-        twelveCt.className = key;
-    } else if (key === "threeFour") {
-        container = cardCt;
-        cardCt.style.display = "grid";
-        cardCt.className = key;
-    } else {
-        container = cardCt;
-        cardCt.style.display = "flex";
-        cardCt.className = key;
-    }
-
-    // 建立背面卡片
-    for (let i = 0; i < totalCount; i++) {
-        const d = document.createElement("div");
-        d.className = "card";
-        const img = document.createElement("img");
-        img.src = "images/背面邊框.png";
-        const p = document.createElement("p");
-        p.textContent = `第 ${i+1} 張`;
-        d.append(img, p);
-        container.appendChild(d);
-    }
-}
-
-// window.onload = showBackPreview;
 
 
 
@@ -381,7 +228,7 @@ function showRandomContent(isBackside = false) {
     }
 
     // 預設背面卡片資料
-    const backCard = { image: "背面邊框.png", text: "" };
+    const backCard = { image: "背面邊框.png", text: "  -  " };
 
     // 選擇容器
     let container;
@@ -462,4 +309,27 @@ function showRandomContent(isBackside = false) {
     }
 }
 
+function playShuffleAnimation(container, callback) {
+    container.classList.add('shuffling');
+    // 0.6s 之後移除 class 並執行 callback
+    setTimeout(() => {
+        container.classList.remove('shuffling');
+        if (callback) callback();
+    }, 600);
+}
+
+function shufflePreview() {
+    const key = document.getElementById("spreadSelector").value;
+    // 選出卡片容器（單／多都用同一個 container）
+    const container = key === 'twelve'
+      ? document.getElementById("twelveContainer")
+      : document.getElementById("cardContainer");
+  
+    // 先播放動畫，結束後再重繪
+    playShuffleAnimation(container, () => showRandomContent(true));
+  }
+  
+
+
 window.onload = () => showRandomContent(true);
+
