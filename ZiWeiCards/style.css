@@ -453,28 +453,32 @@ button {
     border-radius: 5px;
 }
 
-/* 確保 header 可以定位內部絕對定位元素 */
+/* 確保 header 滿版 + Flex 版型 */
 .site-header {
-    position: relative;
-    padding: 16px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    width: 100%;
+    /* 滿版寬度 */
+    padding: 16px 20px;
+    /* 左右內距 */
+    box-sizing: border-box;
 }
 
-/* 原 logo + 標題 區塊 */
+/* 左側 logo+標題 */
 .logo-title {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* 更新日期 區塊，絕對定位到右上 */
+/* 右側更新日期：自動靠最右 */
 .update-header {
-    position: absolute;
-    top: 8px;
-    right: 20px;
+    margin-left: auto;
+    /* 推到最右 */
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 0.8rem;
     color: #777;
+    /* 如要更貼邊：可調整 padding-right */
+    padding-right: 0;
+    padding-top: 0;
 }
