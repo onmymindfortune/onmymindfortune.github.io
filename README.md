@@ -1,16 +1,13 @@
-# onmymindfortune.github.io
+# [紫微牌卡 — 線上抽牌](https://onmymindfortune.github.io/ZiWeiCards/)
 
 這是一個用於 GitHub Pages 的靜態網站倉庫，目前包含以下子專案：  
 - **紫微牌卡 — 線上抽牌** (`ZiWeiCards/`)：純前端抽牌應用，隨機抽取紫微牌卡並展示正/倒牌的解讀。
 
 ## 目錄
 
-- [紫微牌卡 — 線上抽牌](#紫微牌卡—線上抽牌)  
 - [專案結構](#專案結構)  
 - [授權](#授權)  
 - [作者資訊](#作者資訊)  
-
-## [紫微牌卡 — 線上抽牌](https://onmymindfortune.github.io/ZiWeiCards/)
 
 ### 功能特色
 
