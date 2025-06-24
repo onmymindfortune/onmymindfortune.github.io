@@ -1,5 +1,5 @@
 // 牌卡資料
-const contentMain = [ // … 總共 76 張
+const contentMain = [ // … 總共 78 張
     { image: "天同.png", text: "天同-(正牌)"},
     { image: "天機.png", text: "天機-(正牌)"},
     { image: "天府.png", text: "天府-(正牌)"},
@@ -75,6 +75,8 @@ const contentMain = [ // … 總共 76 張
     { image: "紫微天相倒.png", text: "紫微天相-(倒牌)"},
     { image: "天同倒.png", text: "天同-(倒牌)"},
     { image: "七殺倒.png", text: "七殺-(倒牌)"},
+    { image: "空宮倒.png", text: "空宮-(倒牌)"},
+    { image: "空宮.png", text: "空宮-(正牌)"},
 ];
 
 const contentSupport = [ // … 總共 38 張
@@ -189,39 +191,133 @@ function createCard(parent, folder, card) {
     parent.append(d);
 }
 
-function showRandomContent() {
+// function showRandomContent() {
+//     const key = document.getElementById("spreadSelector").value;
+//     const cardCt = document.getElementById("cardContainer");
+//     const twelveCt = document.getElementById("twelveContainer");
+
+//     // 清空並隱藏
+//     cardCt.innerHTML = "";
+//     twelveCt.innerHTML = "";
+//     cardCt.style.display   = "none";
+//     twelveCt.style.display = "none";
+
+//     // 洗牌
+//     const mainShuffled    = shuffle(contentMain);
+//     const supportShuffled = shuffle(contentSupport);
+//     const lifeShuffled    = shuffle(contentLife);
+
+//     // 取牌（不重複正/倒）
+//     const spread = spreads[key];
+//     // 主星與額外
+//     const mainCount = spread.main + spread.extra;
+//     const uniqueMain = dealUnique(mainShuffled, mainCount);
+//     const mains = uniqueMain.slice(0, spread.main);
+//     const extraCard = spread.extra > 0 ? uniqueMain[spread.main] : null;
+//     // 輔星
+//     const sups = spread.support > 0
+//         ? dealUnique(supportShuffled, spread.support)
+//         : [];
+//     // 長生
+//     const lifes = spread.life > 0
+//         ? dealUnique(lifeShuffled, spread.life)
+//         : [];
+
+//     // 選擇容器並顯示
+//     let container;
+//     if (key === "twelve") {
+//         container = twelveCt;
+//         twelveCt.style.display = "grid";
+//         twelveCt.className = key;
+//     } else if (key === "threeFour") {
+//         container = cardCt;
+//         cardCt.style.display = "grid";
+//         cardCt.className = key;
+//     } else {
+//         container = cardCt;
+//         cardCt.style.display = "flex";
+//         cardCt.className = key;
+//     }
+
+//     // 依牌陣組合 DOM
+//     if (key === "twelve") {
+//         // 十二宮位：12 組 + 中央主星 + 中央長生
+//         for (let i = 0; i < 12; i++) {
+//             const g = document.createElement("div");
+//             g.className = `group group-pos pos${i+1}`;
+//             createCard(g, "1Main",     mains[i]);
+//             createCard(g, "2Support",  sups[i]);
+//             container.append(g);
+//         }
+//         // 中央主星
+//         const cm = document.createElement("div");
+//         cm.className = "center-main";
+//         createCard(cm, "1Main", extraCard);
+//         // 中央長生
+//         const cl = document.createElement("div");
+//         cl.className = "center-life";
+//         createCard(cl, "3Life", lifes[0]);
+//         container.append(cm, cl);
+//     }
+//     else if (key === "opposition") {
+//         // 對宮：2 主 + 2 輔 + 1 長
+//         const gm = document.createElement("div");
+//         gm.className = "group-main";
+//         mains.forEach(c => createCard(gm, "1Main", c));
+//         const gs = document.createElement("div");
+//         gs.className = "group-support";
+//         sups.forEach(c => createCard(gs, "2Support", c));
+//         const gl = document.createElement("div");
+//         gl.className = "group-life";
+//         createCard(gl, "3Life", lifes[0]);
+//         container.append(gm, gs, gl);
+//     }
+//     else if (key === "threeFour") {
+//         // 三方四正：4 組 (主+輔) + 1 長
+//         ["top","right","bottom","left"].forEach((pos,i) => {
+//             const g = document.createElement("div");
+//             g.className = `group group-${pos}`;
+//             createCard(g, "1Main",    mains[i]);
+//             createCard(g, "2Support", sups[i]);
+//             container.append(g);
+//         });
+//         const gl = document.createElement("div");
+//         gl.className = "group-life";
+//         createCard(gl, "3Life", lifes[0]);
+//         container.append(gl);
+//     }
+//     else if (key === "single") {
+//         // 一張：1 主
+//         createCard(container, "1Main", mains[0]);
+//     }
+//     else if (key === "two") {
+//         // 二張：1 主 + 1 輔
+//         createCard(container, "1Main",    mains[0]);
+//         createCard(container, "2Support", sups[0]);
+//     }
+//     else if (key === "basicThree") {
+//         // 基本三張：1 主 + 1 輔 + 1 長
+//         createCard(container, "1Main",    mains[0]);
+//         createCard(container, "2Support", sups[0]);
+//         createCard(container, "3Life",    lifes[0]);
+//     }
+// }
+
+function showBackPreview() {
     const key = document.getElementById("spreadSelector").value;
     const cardCt = document.getElementById("cardContainer");
     const twelveCt = document.getElementById("twelveContainer");
 
-    // 清空並隱藏
+    // 清空容器
     cardCt.innerHTML = "";
     twelveCt.innerHTML = "";
     cardCt.style.display   = "none";
     twelveCt.style.display = "none";
 
-    // 洗牌
-    const mainShuffled    = shuffle(contentMain);
-    const supportShuffled = shuffle(contentSupport);
-    const lifeShuffled    = shuffle(contentLife);
-
-    // 取牌（不重複正/倒）
     const spread = spreads[key];
-    // 主星與額外
-    const mainCount = spread.main + spread.extra;
-    const uniqueMain = dealUnique(mainShuffled, mainCount);
-    const mains = uniqueMain.slice(0, spread.main);
-    const extraCard = spread.extra > 0 ? uniqueMain[spread.main] : null;
-    // 輔星
-    const sups = spread.support > 0
-        ? dealUnique(supportShuffled, spread.support)
-        : [];
-    // 長生
-    const lifes = spread.life > 0
-        ? dealUnique(lifeShuffled, spread.life)
-        : [];
+    const totalCount = spread.main + spread.support + spread.life + (spread.extra || 0);
 
-    // 選擇容器並顯示
+    // 選擇容器
     let container;
     if (key === "twelve") {
         container = twelveCt;
@@ -237,66 +333,133 @@ function showRandomContent() {
         cardCt.className = key;
     }
 
-    // 依牌陣組合 DOM
+    // 建立背面卡片
+    for (let i = 0; i < totalCount; i++) {
+        const d = document.createElement("div");
+        d.className = "card";
+        const img = document.createElement("img");
+        img.src = "images/背面邊框.png";
+        const p = document.createElement("p");
+        p.textContent = `第 ${i+1} 張`;
+        d.append(img, p);
+        container.appendChild(d);
+    }
+}
+
+// window.onload = showBackPreview;
+
+
+
+function showRandomContent(isBackside = false) {
+    const key = document.getElementById("spreadSelector").value;
+    const cardCt = document.getElementById("cardContainer");
+    const twelveCt = document.getElementById("twelveContainer");
+
+    // 清空並隱藏
+    cardCt.innerHTML = "";
+    twelveCt.innerHTML = "";
+    cardCt.style.display   = "none";
+    twelveCt.style.display = "none";
+
+    // 牌陣定義
+    const spread = spreads[key];
+
+    // 洗牌與抽牌（只有不是背面模式時才做）
+    let mains = [], sups = [], lifes = [], extraCard = null;
+    if (!isBackside) {
+        const mainShuffled    = shuffle(contentMain);
+        const supportShuffled = shuffle(contentSupport);
+        const lifeShuffled    = shuffle(contentLife);
+
+        const mainCount = spread.main + (spread.extra || 0);
+        const uniqueMain = dealUnique(mainShuffled, mainCount);
+        mains = uniqueMain.slice(0, spread.main);
+        extraCard = spread.extra > 0 ? uniqueMain[spread.main] : null;
+
+        sups = spread.support > 0 ? dealUnique(supportShuffled, spread.support) : [];
+        lifes = spread.life > 0 ? dealUnique(lifeShuffled, spread.life) : [];
+    }
+
+    // 預設背面卡片資料
+    const backCard = { image: "背面邊框.png", text: "" };
+
+    // 選擇容器
+    let container;
     if (key === "twelve") {
-        // 十二宮位：12 組 + 中央主星 + 中央長生
+        container = twelveCt;
+        twelveCt.style.display = "grid";
+        twelveCt.className = key;
+    } else if (key === "threeFour") {
+        container = cardCt;
+        cardCt.style.display = "grid";
+        cardCt.className = key;
+    } else {
+        container = cardCt;
+        cardCt.style.display = "flex";
+        cardCt.className = key;
+    }
+
+    // 根據牌陣組卡（共用邏輯）
+    if (key === "twelve") {
         for (let i = 0; i < 12; i++) {
             const g = document.createElement("div");
             g.className = `group group-pos pos${i+1}`;
-            createCard(g, "1Main",     mains[i]);
-            createCard(g, "2Support",  sups[i]);
+            createCard(g, isBackside ? "Common" : "1Main", isBackside ? backCard : mains[i]);
+            createCard(g, isBackside ? "Common" : "2Support", isBackside ? backCard : sups[i]);
             container.append(g);
         }
-        // 中央主星
         const cm = document.createElement("div");
         cm.className = "center-main";
-        createCard(cm, "1Main", extraCard);
-        // 中央長生
+        createCard(cm, isBackside ? "Common" : "1Main", isBackside ? backCard : extraCard);
+
         const cl = document.createElement("div");
         cl.className = "center-life";
-        createCard(cl, "3Life", lifes[0]);
+        createCard(cl, isBackside ? "Common" : "3Life", isBackside ? backCard : lifes[0]);
+
         container.append(cm, cl);
     }
     else if (key === "opposition") {
-        // 對宮：2 主 + 2 輔 + 1 長
         const gm = document.createElement("div");
         gm.className = "group-main";
-        mains.forEach(c => createCard(gm, "1Main", c));
+        for (let i = 0; i < spread.main; i++) {
+            createCard(gm, isBackside ? "Common" : "1Main", isBackside ? backCard : mains[i]);
+        }
         const gs = document.createElement("div");
         gs.className = "group-support";
-        sups.forEach(c => createCard(gs, "2Support", c));
+        for (let i = 0; i < spread.support; i++) {
+            createCard(gs, isBackside ? "Common" : "2Support", isBackside ? backCard : sups[i]);
+        }
         const gl = document.createElement("div");
         gl.className = "group-life";
-        createCard(gl, "3Life", lifes[0]);
+        createCard(gl, isBackside ? "Common" : "3Life", isBackside ? backCard : lifes[0]);
+
         container.append(gm, gs, gl);
     }
     else if (key === "threeFour") {
-        // 三方四正：4 組 (主+輔) + 1 長
-        ["top","right","bottom","left"].forEach((pos,i) => {
+        ["top", "right", "bottom", "left"].forEach((_, i) => {
             const g = document.createElement("div");
-            g.className = `group group-${pos}`;
-            createCard(g, "1Main",    mains[i]);
-            createCard(g, "2Support", sups[i]);
+            g.className = `group group-${_}`;
+            createCard(g, isBackside ? "Common" : "1Main", isBackside ? backCard : mains[i]);
+            createCard(g, isBackside ? "Common" : "2Support", isBackside ? backCard : sups[i]);
             container.append(g);
         });
         const gl = document.createElement("div");
         gl.className = "group-life";
-        createCard(gl, "3Life", lifes[0]);
+        createCard(gl, isBackside ? "Common" : "3Life", isBackside ? backCard : lifes[0]);
         container.append(gl);
     }
     else if (key === "single") {
-        // 一張：1 主
-        createCard(container, "1Main", mains[0]);
+        createCard(container, isBackside ? "Common" : "1Main", isBackside ? backCard : mains[0]);
     }
     else if (key === "two") {
-        // 二張：1 主 + 1 輔
-        createCard(container, "1Main",    mains[0]);
-        createCard(container, "2Support", sups[0]);
+        createCard(container, isBackside ? "Common" : "1Main", isBackside ? backCard : mains[0]);
+        createCard(container, isBackside ? "Common" : "2Support", isBackside ? backCard : sups[0]);
     }
     else if (key === "basicThree") {
-        // 基本三張：1 主 + 1 輔 + 1 長
-        createCard(container, "1Main",    mains[0]);
-        createCard(container, "2Support", sups[0]);
-        createCard(container, "3Life",    lifes[0]);
+        createCard(container, isBackside ? "Common" : "1Main",    isBackside ? backCard : mains[0]);
+        createCard(container, isBackside ? "Common" : "2Support", isBackside ? backCard : sups[0]);
+        createCard(container, isBackside ? "Common" : "3Life",    isBackside ? backCard : lifes[0]);
     }
 }
+
+window.onload = () => showRandomContent(true);
