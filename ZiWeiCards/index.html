@@ -60,6 +60,11 @@
             align-items: center;
             justify-content: center;
         }
+        #cardContainer.single p,
+        #cardContainer.two p,
+        #cardContainer.basicThree p {
+            font-size: 30px;
+        }
 
         #cardContainer.two,
         #cardContainer.basicThree {
@@ -96,7 +101,7 @@
             /* 全部置中 */
             align-items: center;
             /* 垂直置中 */
-            gap: 2px;
+            
             /* 三組之間要有空隙 */
         }
 
@@ -105,8 +110,11 @@
         #cardContainer.opposition .life {
             display: flex;
             flex-direction: row;
-            gap: 8px;
+            gap: 80px;
             /* 同組卡片之間要有空隙 */
+        }
+        #cardContainer.opposition p{
+            font-size: 25px;
         }
 
 
@@ -133,6 +141,9 @@
             /* 將整個 grid 块置中 */
             justify-items: center;
             /* 將每個子項目置中 */
+        }
+        #cardContainer.threeFour p{
+            font-size: 25px;
         }
 
         #cardContainer.threeFour .group-top {
@@ -193,23 +204,23 @@
         }
 
         /* 頂排：辰、巳、午、未 */
-        .pos2 { top:  16%;  left: 13%; }
-        .pos3 { top:  16%;  left: 36.5%; }
-        .pos4 { top:  16%;  left: 59.8%; }
-        .pos5 { top:  16%;  left: 83.3%; }
+        .pos2 { top:  16.5%;  left: 13%; }
+        .pos3 { top:  16.5%;  left: 36.5%; }
+        .pos4 { top:  16.5%;  left: 59.8%; }
+        .pos5 { top:  16.5%;  left: 83.3%; }
 
         /* 右側：申、酉 */
         .pos6 { top:  39%;  left: 83.3%; }
-        .pos8 { top:  62%;  left: 83.3%; }
+        .pos8 { top:  61.5%;  left: 83.3%; }
 
         /* 底排：戌、亥、子、丑 */
-        .pos12 { top:  85%;  left: 83.3%; }
-        .pos1  { top:  85%;  left: 59.8%; }
-        .pos10 { top:  85%;  left: 36.5%; }
-        .pos9  { top:  85%;  left: 13%; }
+        .pos12 { top:  84%;  left: 83.3%; }
+        .pos1  { top:  84%;  left: 59.8%; }
+        .pos10 { top:  84%;  left: 36.5%; }
+        .pos9  { top:  84%;  left: 13%; }
 
         /* 左側：寅、卯 */
-        .pos7  { top:  62%;  left: 13%; }
+        .pos7  { top:  61.5%;  left: 13%; }
         .pos11 { top:  39%;  left: 13%; }
 
 
@@ -229,11 +240,15 @@
             width: 180px;   /* 或更小 */
             height: auto;
         }
+
+        #twelveContainer.twelve .group-pos p{
+            font-size: 20px;
+        }
         #twelveContainer.twelve .center-main p,
         #twelveContainer.twelve .center-life p {
             text-align: center;
             margin: 8px 0 0;
-            font-size: 20px;
+            font-size: 30px;
             white-space: pre-line;
         }
 
