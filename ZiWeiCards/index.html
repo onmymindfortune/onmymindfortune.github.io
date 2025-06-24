@@ -5,327 +5,39 @@
     <meta charset="UTF-8" />
     <title>紫微牌卡-線上抽牌</title>
     <link rel="icon" type="image/png" href="images/Logo/logo_circle.png" />
-    <style>
-        /* 單張卡片：直向置中圖片＋文字 */
-        .card {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            text-align: center;
-        }
-
-        /* 文字水平置中 */
-        .card p {
-            text-align: center;
-            margin: 8px 0 0;
-            font-size: 14px;
-            white-space: pre-line;
-        }
-
-        .card img {
-            width: 150px;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            border: 1px solid #000;
-        }
-
-
-        /* 牌卡樣式 */
-        #cardContainer {
-            position: relative;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        /* 共用卡片樣式 */
-        #cardContainer .card {
-            text-align: center;
-            margin: 8px;
-            margin: 0 8px;
-            /* 卡片間距 */
-        }
-
-        /* 三種簡單牌陣共用 */
-        #cardContainer.single,
-        #cardContainer.two,
-        #cardContainer.basicThree {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #cardContainer.single p,
-        #cardContainer.two p,
-        #cardContainer.basicThree p {
-            font-size: 30px;
-        }
-
-        #cardContainer.two,
-        #cardContainer.basicThree {
-            align-content: center;
-            /* 垂直置中整個 grid */
-            align-items: center;
-            /* 垂直置中每個子項目 */
-        }
-
-        /* 一張牌陣：放大到 200px 寬 */
-        #cardContainer.single .card img {
-            width: 350px;
-            height: auto;
-        }
-
-        /* 兩張牌陣：放大到 180px 寬 */
-        #cardContainer.two .card img {
-            width: 300px;
-            height: auto;
-        }
-
-        /* 三張牌陣（basicThree）：放大到 160px 寬 */
-        #cardContainer.basicThree .card img {
-            width: 250px;
-            height: auto;
-        }
-
-
-
-        /* 4. 對宮 */
-        #cardContainer.opposition {
-            display: flex;
-            justify-content: center;
-            /* 全部置中 */
-            align-items: center;
-            /* 垂直置中 */
-            
-            /* 三組之間要有空隙 */
-        }
-
-        #cardContainer.opposition .group1,
-        #cardContainer.opposition .group2,
-        #cardContainer.opposition .life {
-            display: flex;
-            flex-direction: row;
-            gap: 80px;
-            /* 同組卡片之間要有空隙 */
-        }
-        #cardContainer.opposition p{
-            font-size: 25px;
-        }
-
-
-
-        /* 5. 三方四正：Grid 版 */
-        #cardContainer.threeFour {
-            display: grid;
-            width: 100%;
-            max-width: 1000px;
-            /* 依需求調整最大寬度 */
-            margin: 0 auto;
-            /* 四欄三列：col1 空白｜col2 top/空格 ｜col3 空白｜col4 life */
-            grid-template-columns: 1fr auto 1fr auto;
-            grid-template-rows: auto auto auto;
-            grid-template-areas:
-                ".       top     life   ."
-                "left    .       right  ."
-                ".       bottom  .      .";
-            gap: 20px;
-            /* 群組間距 */
-            justify-items: center;
-            align-items: center;
-            justify-content: center;
-            /* 將整個 grid 块置中 */
-            justify-items: center;
-            /* 將每個子項目置中 */
-        }
-        #cardContainer.threeFour p{
-            font-size: 25px;
-        }
-
-        #cardContainer.threeFour .group-top {
-            grid-area: top;
-            display: flex;
-            gap: 8px;
-            /* 同組內兩張卡的間距 */
-        }
-
-        #cardContainer.threeFour .group-bottom {
-            grid-area: bottom;
-            display: flex;
-            gap: 8px;
-        }
-
-        #cardContainer.threeFour .group-left {
-            grid-area: left;
-            display: flex;
-            gap: 8px;
-        }
-
-        #cardContainer.threeFour .group-right {
-            grid-area: right;
-            display: flex;
-            gap: 8px;
-        }
-
-        #cardContainer.threeFour .group-life {
-            grid-area: life;
-            display: flex;
-            justify-content: center;
-        }
-
-        #cardContainer.threeFour {
-            grid-template-columns: 1fr auto 1fr auto !important;
-            grid-template-rows: auto auto auto !important;
-        }
-
-
-        /* 6. 十二宮位：改用底圖＋絕對定位 */
-        #twelveContainer.twelve {
-            position: relative;
-            width: 1375px;   /* 與底圖尺寸同寬高 */
-            height: 1144px;
-            margin: 0 auto;
-            background: url('images/Spreads/十二宮位大牌陣.png') no-repeat center/contain;
-        }
-
-        /* 各宮格改成絕對定位，依底圖上位置微調百分比 */
-        #twelveContainer.twelve .group-pos {
-            position: absolute;
-            display: flex;
-            gap: 3px;
-            justify-content: center;
-            align-items: center;
-            /* 如不需要框線可移除以下 */
-            /* border: 1px solid #000; */
-        }
-
-        /* 頂排：辰、巳、午、未 */
-        .pos2 { top:  16.5%;  left: 13%; }
-        .pos3 { top:  16.5%;  left: 36.5%; }
-        .pos4 { top:  16.5%;  left: 59.8%; }
-        .pos5 { top:  16.5%;  left: 83.3%; }
-
-        /* 右側：申、酉 */
-        .pos6 { top:  39%;  left: 83.3%; }
-        .pos8 { top:  61.5%;  left: 83.3%; }
-
-        /* 底排：戌、亥、子、丑 */
-        .pos12 { top:  84%;  left: 83.3%; }
-        .pos1  { top:  84%;  left: 59.8%; }
-        .pos10 { top:  84%;  left: 36.5%; }
-        .pos9  { top:  84%;  left: 13%; }
-
-        /* 左側：寅、卯 */
-        .pos7  { top:  61.5%;  left: 13%; }
-        .pos11 { top:  39%;  left: 13%; }
-
-
-
-        /* 中央兩張 */
-        #twelveContainer.twelve .center-main {
-            position: absolute;
-            top: 52%;  left: 39%;
-            display: flex;
-            gap: 3px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #twelveContainer.twelve .center-main img,
-        #twelveContainer.twelve .center-life img {
-            width: 180px;   /* 或更小 */
-            height: auto;
-        }
-
-        #twelveContainer.twelve .group-pos p{
-            font-size: 20px;
-        }
-        #twelveContainer.twelve .center-main p,
-        #twelveContainer.twelve .center-life p {
-            text-align: center;
-            margin: 8px 0 0;
-            font-size: 30px;
-            white-space: pre-line;
-        }
-
-        #twelveContainer.twelve .center-life {
-            position: absolute;
-            top: 52%;  left: 61%;
-            display: flex;
-            gap: 3px;
-            align-items: center;
-            justify-content: center;
-            
-        }
-
-        #twelveContainer.twelve img {
-            width: 110px;   /* 或更小 */
-            height: auto;
-            border: 1px solid #000;
-          }
-
-        #twelveContainer.twelve .group-pos,
-        #twelveContainer.twelve .center-main,
-        #twelveContainer.twelve .center-life {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        display: flex;
-        gap: 10px;              /* 卡片之間的小間距，可自行調整 */
-        align-items: center;
-        justify-content: center;
-        }
-
-
-
-        button {
-            padding: 5px 10px;
-            font-size: 20px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?
+        family=Noto+Sans+TC:wght@400;700&
+        family=Noto+Serif+TC:wght@400;700&
+        display=swap" rel="stylesheet" />
+    <!-- 新增這行：外部 CSS -->
+    <link rel="stylesheet" href="style.css" />
 </head>
-
-
 <header style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
     <!-- logo 圖片 -->
     <img src="images/Logo/logo.png" alt="沐心 Logo" style="height:40px; width:auto;" />
     <!-- 頁面標題 -->
-    <h1>紫微牌卡-線上抽牌 </h1>
-    <a href="https://www.instagram.com/onmymind.fortune/"> 沐心紫微</a>
+    <h1>紫微牌卡-線上抽牌
+        <a href="https://www.instagram.com/onmymind.fortune/" target="_blank"> 沐心紫微</a>
+    </h1>
 </header>
 
 <body>
-
-    <!-- 1) 牌陣選擇 -->
-    <label for="spreadSelector" style="font-size: 20px">選擇牌陣：</label>
-    <select id="spreadSelector" style="font-size: 20px">
-        <option value="single">【一張】牌陣 (1主星牌)</option>
-        <option value="two">【二張】牌陣 (1主+1輔)</option>
-        <option value="basicThree">【三張】牌陣 (1主+1輔+1長)</option>
-        <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
-        <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
-        <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)  </option>
-    </select>
-    
-    <!-- 2) 抽牌按鈕 -->
-    <button onclick="showRandomContent()" style="font-size: 20px">抽牌</button>
-
-    <p></p>
-
-    <div id="cardContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); 
-    gap: 0px;"></div>
-
-    <div id="twelveContainer" style="display: none;"></div>
-
-    
+    <div class="control-bar">
+        <label for="spreadSelector">選擇牌陣：</label>
+        <select id="spreadSelector">
+            <option value="single">【一張】牌陣 (1主星牌)</option>
+            <option value="two">【二張】牌陣 (1主+1輔)</option>
+            <option value="basicThree">【三張】牌陣 (1主+1輔+1長)</option>
+            <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
+            <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
+            <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)</option>
+        </select>
+        <button id="drawBtn" onclick="showRandomContent()">抽牌</button>
+    </div>
+    <div class="card-wrapper">
+        <div id="cardContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;"></div>
+        <div id="twelveContainer" style="display: none;"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 
