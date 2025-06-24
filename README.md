@@ -43,5 +43,4 @@
 
 ## 作者資訊
 
-- **沐心紫微**  
-- Instagram: [@onmymind.fortune](https://www.instagram.com/onmymind.fortune/)  
+- **沐心紫微** ([@onmymind.fortune](https://www.instagram.com/onmymind.fortune/))
