@@ -30,4 +30,4 @@ ZiWeiCards/
 
 ## 作者
 
-- **沐心紫微** (@onmymind.fortune)
+- **沐心紫微** ([@onmymind.fortune](https://www.instagram.com/onmymind.fortune/)  )
