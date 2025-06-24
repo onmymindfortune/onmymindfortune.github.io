@@ -30,7 +30,8 @@
 
 
 /* 2. 抽牌按鈕：漸層＋懸停效果 */
-#drawBtn {
+#drawBtn,
+#shuffleBtn {
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 1rem;
     padding: 8px 16px;
@@ -43,9 +44,45 @@
     transition: transform .1s, box-shadow .2s;
 }
 
-#drawBtn:hover {
+#drawBtn:hover,
+#shuffleBtn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button+button {
+    margin-left: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 16px;
+    margin-left: 10px;
+}
+
+/* 區分按鈕色彩 */
+#drawBtn {
+    background-color: #4CAF50;
+    /* 綠 */
+}
+
+#shuffleBtn {
+    background-color: #f57c00;
+    /* 橘色 */
+}
+
+#drawBtn {
+    margin-right: 40px;
 }
 
 /* 3. 卡片顯示區：置中＋陰影＋間距 */
@@ -440,17 +477,6 @@ h1 a:hover {
     /* 卡片之間的小間距，可自行調整 */
     align-items: center;
     justify-content: center;
-}
-
-
-button {
-    padding: 5px 10px;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
 }
 
 /* 確保 header 滿版 + Flex 版型 */
