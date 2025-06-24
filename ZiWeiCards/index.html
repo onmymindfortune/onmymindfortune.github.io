@@ -31,16 +31,19 @@
 
 
 <div class="control-bar">
+
     <label for="spreadSelector">選擇牌陣：</label>
-    <select id="spreadSelector">
+    <select id="spreadSelector" onchange="showRandomContent(true)">
         <option value="single">【一張】牌陣 (1主星牌)</option>
         <option value="two">【二張】牌陣 (1主+1輔)</option>
-        <option value="basicThree">【三張】牌陣 (1主+1輔+1長)</option>
+        <option value="basicThree" selected>【三張】基礎牌陣 (1主+1輔+1長)</option>
         <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
         <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
         <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)</option>
     </select>
+    <button id="shuffleBtn" onclick="showRandomContent(true)">洗牌</button>
     <button id="drawBtn" onclick="showRandomContent()">抽牌</button>
+
 </div>
 <div class="card-wrapper">
     <div id="cardContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;"></div>
