@@ -10,7 +10,7 @@
 - [授權](#授權)  
 - [作者資訊](#作者資訊)  
 
-## 紫微牌卡 — 線上抽牌 (https://onmymindfortune.github.io/ZiWeiCards/)
+## [紫微牌卡 — 線上抽牌](https://onmymindfortune.github.io/ZiWeiCards/)
 
 ### 功能特色
 
