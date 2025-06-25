@@ -383,18 +383,17 @@ function shufflePreview() {
       });
   }
   
-
   function saveCardScreen() {
     const key = document.getElementById("spreadSelector").value;
     const container = key === "twelve"
       ? document.getElementById("twelveContainer")
       : document.getElementById("cardContainer");
   
-    // 決定要用哪個時間
+    // 時間戳
     const dateObj = lastDrawTimestamp || new Date();
-    const pad = n => n.toString().padStart(2,'0');
+    const pad = n => n.toString().padStart(2, '0');
     const yyyy = dateObj.getFullYear();
-    const MM   = pad(dateObj.getMonth()+1);
+    const MM   = pad(dateObj.getMonth() + 1);
     const dd   = pad(dateObj.getDate());
     const hh   = pad(dateObj.getHours());
     const mm   = pad(dateObj.getMinutes());
@@ -419,34 +418,40 @@ function shufflePreview() {
   
     html2canvas(container, { backgroundColor: null })
       .then(canvas => {
-        const dataURL = canvas.toDataURL("image/png");
+        canvas.toBlob(async blob => {
+          const file = new File([blob], filename, { type: 'image/png' });
   
-        // 偵測 iOS Safari
-        const ua = navigator.userAgent;
-        const isiOS = /iP(hone|ad|od)/.test(ua);
-        const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
-  
-        if (isiOS && isSafari) {
-          // 在 iOS Safari：開新分頁顯示，長按另存
-          const w = window.open();
-          w.document.write(
-            `<title>請長按並選「儲存圖像」</title>` +
-            `<img src="${dataURL}" style="max-width:100%;height:auto;">`
-          );
-        } else {
-          // 其他瀏覽器：自動下載
-          const link = document.createElement("a");
-          link.download = filename;
-          link.href = dataURL;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
+          // 如果支援分享檔案
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+              await navigator.share({
+                files: [file],
+                title: '紫微牌卡 圖片',
+                text: '長按圖示後可「儲存影像」'
+              });
+            } catch (err) {
+              console.warn('分享失敗，改以開新分頁', err);
+              openImageInNewTab(blob, filename);
+            }
+          } else {
+            // 回退：開新分頁讓使用者長按
+            openImageInNewTab(blob, filename);
+          }
+        }, 'image/png');
       })
       .catch(err => {
         console.error("截圖失敗：", err);
         alert("儲存畫面失敗，請稍候再試");
       });
+  
+    function openImageInNewTab(blob, name) {
+      const url = URL.createObjectURL(blob);
+      const w = window.open();
+      w.document.write(`
+        <title>長按並選「儲存影像」</title>
+        <img src="${url}" style="max-width:100%;height:auto;" alt="${name}">
+      `);
+    }
   }
   
 window.onload = () => showRandomContent(true);
