@@ -434,7 +434,8 @@ function saveCardScreen() {
     const hh = pad(dateObj.getHours());
     const mm = pad(dateObj.getMinutes());
     const ss = pad(dateObj.getSeconds());
-    const timestampText = `抽牌時間：${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`;
+    const timestamp = `${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`;
+    const timestampText = `抽牌時間：${timestamp}`;
     var spread = ""
     if (key === "single")
         spread = "一張牌陣"
@@ -448,7 +449,7 @@ function saveCardScreen() {
         spread = "三方四正牌陣"
     else if (key == "twelve")
         spread = "十二宮位大牌陣"
-    const filename = `紫微牌卡_${spread}_${timestampText}.png`;
+    const filename = `紫微牌卡_${spread}_${timestamp}.png`;
 
     // 加入浮水印到真實容器上
     const overlay = document.createElement("div");
