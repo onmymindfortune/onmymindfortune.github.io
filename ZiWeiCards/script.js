@@ -372,19 +372,20 @@ function saveCardScreen() {
   
     html2canvas(container, { backgroundColor: null })
       .then(canvas => {
-        if (isiOS && isSafari) {
-            const dataURL = canvas.toDataURL('image/png');
-            // 導向 dataURL，顯示在新分頁上
-            win.location.href = dataURL;
-        } else {
-            // 其他瀏覽器：自動下載
-            const link = document.createElement("a");
-            link.download = filename;
-            link.href = canvas.toDataURL("image/png");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+        
+        const dataURL = canvas.toDataURL('image/png');
+        // 導向 dataURL，顯示在新分頁上
+        win.location.href = dataURL;
+        // if (isiOS && isSafari) {
+        // } else {
+        //     // 其他瀏覽器：自動下載
+        //     const link = document.createElement("a");
+        //     link.download = filename;
+        //     link.href = canvas.toDataURL("image/png");
+        //     document.body.appendChild(link);
+        //     link.click();
+        //     document.body.removeChild(link);
+        // }
       })
       .catch(err => {
         console.error('截圖失敗', err);
