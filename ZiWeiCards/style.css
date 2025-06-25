@@ -31,7 +31,7 @@
 
 /* 2. 抽牌按鈕：漸層＋懸停效果 */
 #drawBtn,
-#shuffleBtn {
+#shuffleBtn #saveBtn {
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 1rem;
     padding: 8px 16px;
@@ -98,12 +98,6 @@ button {
     background-color: #607D8B;
 }
 
-#saveBtn:hover {
-    background-color: #78909C;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
 
 
 
@@ -120,7 +114,7 @@ button {
 
 
 .divider {
-    margin: 0 8px;
+    margin: 0 2px;
     font-size: 20px;
     color: #aaa;
 }
@@ -387,6 +381,7 @@ h1 a:hover {
 #twelveContainer.twelve .group-pos {
     position: absolute;
     display: flex;
+    padding-top: 48px;
     gap: 3px;
     justify-content: center;
     align-items: center;
@@ -396,65 +391,65 @@ h1 a:hover {
 
 /* 頂排：辰、巳、午、未 */
 .pos2 {
-    top: 16.5%;
+    top: 14.3%;
     left: 13%;
 }
 
 .pos3 {
-    top: 16.5%;
+    top: 14.3%;
     left: 36.5%;
 }
 
 .pos4 {
-    top: 16.5%;
+    top: 14.3%;
     left: 59.8%;
 }
 
 .pos5 {
-    top: 16.5%;
+    top: 14.3%;
     left: 83.3%;
 }
 
 /* 右側：申、酉 */
 .pos6 {
-    top: 39%;
+    top: 36.8%;
     left: 83.3%;
 }
 
 .pos8 {
-    top: 61.5%;
+    top: 59.2%;
     left: 83.3%;
 }
 
 /* 底排：戌、亥、子、丑 */
 .pos12 {
-    top: 84%;
+    top: 81.7%;
     left: 83.3%;
 }
 
 .pos1 {
-    top: 84%;
+    top: 81.7%;
     left: 59.8%;
 }
 
 .pos10 {
-    top: 84%;
+    top: 81.7%;
     left: 36.5%;
 }
 
 .pos9 {
-    top: 84%;
+    top: 81.7%;
     left: 13%;
 }
 
 /* 左側：寅、卯 */
 .pos7 {
-    top: 61.5%;
+    top: 59.2%;
     left: 13%;
 }
 
 .pos11 {
-    top: 39%;
+    top: 36.8%;
     left: 13%;
 }
 
@@ -579,7 +574,81 @@ h1 a:hover {
     animation: shuffleAnim 0.6s ease-in-out;
 }
 
-#cardContainer,
-#twelveContainer {
+#cardContainer {
+    position: relative;
+    padding-top: 48px;
     padding-bottom: 36px;
-    position: relative; }
+}
+
+/* 問題輸入欄樣式 */
+.control-bar #questionInput {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    margin-right: 12px;
+    outline: none;
+    transition: border-color .2s;
+}
+
+.control-bar #questionInput:focus {
+    border-color: #6a0dad;
+}
+
+/* 控制列排版 */
+.control-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.control-bar .control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-bar .btn-group button {
+    margin-left: 4px;
+}
+
+/* 問題輸入欄樣式 */
+.control-bar #questionInput {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    transition: border-color .2s;
+}
+
+.control-bar #questionInput:focus {
+    border-color: #6a0dad;
+}
+
+/* 牌面容器：置中並設定水平間距 */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+}
+
+.cards-container .card {
+    width: 200px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
