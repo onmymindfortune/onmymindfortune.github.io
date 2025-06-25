@@ -560,7 +560,6 @@ function saveCardScreen() {
     const url = URL.createObjectURL(blob);
     const w = window.open();
     w.document.write(`
-            <title>長按並選「儲存影像」</title>
             <img src="${url}" style="max-width:100%;height:auto;" alt="${name}">
         `);
   }
