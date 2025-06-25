@@ -384,5 +384,69 @@ function shufflePreview() {
   }
   
 
+  function saveCardScreen() {
+    const key = document.getElementById("spreadSelector").value;
+    const container = key === "twelve"
+      ? document.getElementById("twelveContainer")
+      : document.getElementById("cardContainer");
+  
+    // 決定要用哪個時間
+    const dateObj = lastDrawTimestamp || new Date();
+    const pad = n => n.toString().padStart(2,'0');
+    const yyyy = dateObj.getFullYear();
+    const MM   = pad(dateObj.getMonth()+1);
+    const dd   = pad(dateObj.getDate());
+    const hh   = pad(dateObj.getHours());
+    const mm   = pad(dateObj.getMinutes());
+    const ss   = pad(dateObj.getSeconds());
+    const timestamp = `${yyyy}${MM}${dd}_${hh}${mm}${ss}`;
 
+    var spread = ""
+    if (key === "single")
+        spread = "一張牌陣"
+    else if (key == "two")
+        spread = "二張牌陣"
+    else if (key == "basicThree")
+        spread = "三張基礎牌陣"
+    else if (key == "opposition")
+        spread = "對宮牌陣"
+    else if (key == "threeFour")
+        spread = "三方四正牌陣"
+    else if (key == "twelve")
+        spread = "十二宮位大牌陣"
+
+    const filename = `紫微牌卡_${spread}_${timestamp}.png`;
+  
+    html2canvas(container, { backgroundColor: null })
+      .then(canvas => {
+        const dataURL = canvas.toDataURL("image/png");
+  
+        // 偵測 iOS Safari
+        const ua = navigator.userAgent;
+        const isiOS = /iP(hone|ad|od)/.test(ua);
+        const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
+  
+        if (isiOS && isSafari) {
+          // 在 iOS Safari：開新分頁顯示，長按另存
+          const w = window.open();
+          w.document.write(
+            `<title>請長按並選「儲存圖像」</title>` +
+            `<img src="${dataURL}" style="max-width:100%;height:auto;">`
+          );
+        } else {
+          // 其他瀏覽器：自動下載
+          const link = document.createElement("a");
+          link.download = filename;
+          link.href = dataURL;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      })
+      .catch(err => {
+        console.error("截圖失敗：", err);
+        alert("儲存畫面失敗，請稍候再試");
+      });
+  }
+  
 window.onload = () => showRandomContent(true);
