@@ -349,13 +349,40 @@ function saveCardScreen() {
     const pad = n => n.toString().padStart(2,'0');
     const timestamp = `${dateObj.getFullYear()}${pad(dateObj.getMonth()+1)}${pad(dateObj.getDate())}_` +
                       `${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}${pad(dateObj.getSeconds())}`;
-    const filename = `紫微牌卡_${key}_${timestamp}.png`;
+    var spread = ""
+    if (key === "single")
+        spread = "一張牌陣"
+    else if (key == "two")
+        spread = "二張牌陣"
+    else if (key == "basicThree")
+        spread = "三張基礎牌陣"
+    else if (key == "opposition")
+        spread = "對宮牌陣"
+    else if (key == "threeFour")
+        spread = "三方四正牌陣"
+    else if (key == "twelve")
+        spread = "十二宮位大牌陣"
+    const filename = `紫微牌卡_${spread}_${timestamp}.png`;
   
     html2canvas(container, { backgroundColor: null })
       .then(canvas => {
-        const dataURL = canvas.toDataURL('image/png');
-        // 導向 dataURL，顯示在新分頁上
-        win.location.href = dataURL;
+
+        // 偵測 iOS Safari
+        const ua = navigator.userAgent;
+        const isiOS = /iP(hone|ad|od)/.test(ua);
+        const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
+
+        if (isiOS && isSafari) {
+            const dataURL = canvas.toDataURL('image/png');
+            // 導向 dataURL，顯示在新分頁上
+            win.location.href = dataURL;
+        } else {
+            // 其他瀏覽器：自動下載
+            const link = document.createElement("a");
+            link.download = filename;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
       })
       .catch(err => {
         console.error('截圖失敗', err);
