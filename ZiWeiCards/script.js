@@ -333,55 +333,6 @@ function shufflePreview() {
     playShuffleAnimation(container, () => showRandomContent(true));
   }
 
-  function saveCardScreen() {
-    // 選出正確的容器
-    const key = document.getElementById("spreadSelector").value;
-    const container = key === "twelve"
-      ? document.getElementById("twelveContainer")
-      : document.getElementById("cardContainer");
-  
-    // 決定要用哪個時間：抽牌時間 or 現在時間
-    const dateObj = lastDrawTimestamp || new Date();
-  
-    // 自訂格式：YYYYMMDD_HHMMSS
-    const pad = n => n.toString().padStart(2, '0');
-    const yyyy = dateObj.getFullYear();
-    const MM   = pad(dateObj.getMonth() + 1);
-    const dd   = pad(dateObj.getDate());
-    const hh   = pad(dateObj.getHours());
-    const mm   = pad(dateObj.getMinutes());
-    const ss   = pad(dateObj.getSeconds());
-    const timestamp = `${yyyy}${MM}${dd}_${hh}${mm}${ss}`;
-  
-    var spread = ""
-    if (key === "single")
-        spread = "一張牌陣"
-    else if (key == "two")
-        spread = "二張牌陣"
-    else if (key == "basicThree")
-        spread = "三張基礎牌陣"
-    else if (key == "opposition")
-        spread = "對宮牌陣"
-    else if (key == "threeFour")
-        spread = "三方四正牌陣"
-    else if (key == "twelve")
-        spread = "十二宮位大牌陣"
-
-    const filename = `紫微牌卡_${spread}_${timestamp}.png`;
-
-    // 截圖並下載
-    html2canvas(container, { backgroundColor: null })
-      .then(canvas => {
-        const link = document.createElement("a");
-        link.download = filename;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      })
-      .catch(err => {
-        console.error("截圖失敗：", err);
-        alert("儲存畫面失敗，請稍候再試");
-      });
-  }
   
   function saveCardScreen() {
     const key = document.getElementById("spreadSelector").value;
