@@ -349,7 +349,7 @@ function saveCardScreen() {
     
     // 同步開新分頁
     const win = window.open('', '_blank');
-    
+
     // 時間戳
     const dateObj = lastDrawTimestamp || new Date();
     const pad = n => n.toString().padStart(2,'0');
@@ -372,9 +372,6 @@ function saveCardScreen() {
   
     html2canvas(container, { backgroundColor: null })
       .then(canvas => {
-        const dataURL = canvas.toDataURL('image/png');
-        // 導向 dataURL，顯示在新分頁上
-        win.location.href = dataURL;
         if (isiOS && isSafari) {
             const dataURL = canvas.toDataURL('image/png');
             // 導向 dataURL，顯示在新分頁上
