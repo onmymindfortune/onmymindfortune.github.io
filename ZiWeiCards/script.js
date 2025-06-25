@@ -341,51 +341,21 @@ function saveCardScreen() {
       ? document.getElementById("twelveContainer")
       : document.getElementById("cardContainer");
   
-      
-    // 偵測 iOS Safari
-    const ua = navigator.userAgent;
-    const isiOS = /iP(hone|ad|od)/.test(ua);
-    const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
-    
     // 同步開新分頁
     const win = window.open('', '_blank');
-
+  
     // 時間戳
     const dateObj = lastDrawTimestamp || new Date();
     const pad = n => n.toString().padStart(2,'0');
     const timestamp = `${dateObj.getFullYear()}${pad(dateObj.getMonth()+1)}${pad(dateObj.getDate())}_` +
                       `${pad(dateObj.getHours())}${pad(dateObj.getMinutes())}${pad(dateObj.getSeconds())}`;
-    var spread = ""
-    if (key === "single")
-        spread = "一張牌陣"
-    else if (key == "two")
-        spread = "二張牌陣"
-    else if (key == "basicThree")
-        spread = "三張基礎牌陣"
-    else if (key == "opposition")
-        spread = "對宮牌陣"
-    else if (key == "threeFour")
-        spread = "三方四正牌陣"
-    else if (key == "twelve")
-        spread = "十二宮位大牌陣"
-    const filename = `紫微牌卡_${spread}_${timestamp}.png`;
+    const filename = `紫微牌卡_${key}_${timestamp}.png`;
   
-    html2canvas(container, { backgroundColor: '#ffffff' })
+    html2canvas(container, { backgroundColor: null })
       .then(canvas => {
-        
         const dataURL = canvas.toDataURL('image/png');
         // 導向 dataURL，顯示在新分頁上
         win.location.href = dataURL;
-        // if (isiOS && isSafari) {
-        // } else {
-        //     // 其他瀏覽器：自動下載
-        //     const link = document.createElement("a");
-        //     link.download = filename;
-        //     link.href = canvas.toDataURL("image/png");
-        //     document.body.appendChild(link);
-        //     link.click();
-        //     document.body.removeChild(link);
-        // }
       })
       .catch(err => {
         console.error('截圖失敗', err);
@@ -393,6 +363,7 @@ function saveCardScreen() {
         alert('儲存畫面失敗，請稍候再試');
       });
   }
+  
   
 // 頁面載入預設背面三張
 window.onload = () => showRandomContent(true);
