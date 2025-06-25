@@ -220,6 +220,8 @@ function showRandomContent(isBackside = false) {
         sups = [],
         lifes = [],
         extraCard = null;
+
+    const drawTimeDiv = document.getElementById("drawTimeDisplay");
     if (!isBackside) {
         lastDrawTimestamp = new Date();
         const mainShuffled = shuffle(contentMain);
@@ -234,6 +236,25 @@ function showRandomContent(isBackside = false) {
         sups =
             spread.support > 0 ? dealUnique(supportShuffled, spread.support) : [];
         lifes = spread.life > 0 ? dealUnique(lifeShuffled, spread.life) : [];
+            
+        const pad = (n) => n.toString().padStart(2, "0");
+        const yyyy = lastDrawTimestamp.getFullYear();
+        const MM = pad(lastDrawTimestamp.getMonth() + 1);
+        const dd = pad(lastDrawTimestamp.getDate());
+        const hh = pad(lastDrawTimestamp.getHours());
+        const mm = pad(lastDrawTimestamp.getMinutes());
+        const ss = pad(lastDrawTimestamp.getSeconds());
+        drawTimeDiv.textContent = `抽牌時間：${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`;
+    }else{
+        lastDrawTimestamp = new Date();
+        const pad = (n) => n.toString().padStart(2, "0");
+        const yyyy = lastDrawTimestamp.getFullYear();
+        const MM = pad(lastDrawTimestamp.getMonth() + 1);
+        const dd = pad(lastDrawTimestamp.getDate());
+        const hh = pad(lastDrawTimestamp.getHours());
+        const mm = pad(lastDrawTimestamp.getMinutes());
+        const ss = pad(lastDrawTimestamp.getSeconds());
+        drawTimeDiv.textContent = `抽牌時間：${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`;
     }
 
     // 預設背面卡片資料
@@ -397,7 +418,6 @@ function shufflePreview() {
     // 先播放動畫，結束後再重繪
     playShuffleAnimation(container, () => showRandomContent(true));
 }
-
 function saveCardScreen() {
     const key = document.getElementById("spreadSelector").value;
     const container =
@@ -405,7 +425,7 @@ function saveCardScreen() {
             ? document.getElementById("twelveContainer")
             : document.getElementById("cardContainer");
 
-    // 時間戳
+    // 產生抽牌時間
     const dateObj = lastDrawTimestamp || new Date();
     const pad = (n) => n.toString().padStart(2, "0");
     const yyyy = dateObj.getFullYear();
@@ -414,8 +434,7 @@ function saveCardScreen() {
     const hh = pad(dateObj.getHours());
     const mm = pad(dateObj.getMinutes());
     const ss = pad(dateObj.getSeconds());
-    const timestamp = `${yyyy}${MM}${dd}_${hh}${mm}${ss}`;
-
+    const timestampText = `抽牌時間：${yyyy}/${MM}/${dd} ${hh}:${mm}:${ss}`;
     var spread = ""
     if (key === "single")
         spread = "一張牌陣"
@@ -429,19 +448,35 @@ function saveCardScreen() {
         spread = "三方四正牌陣"
     else if (key == "twelve")
         spread = "十二宮位大牌陣"
-    const filename = `紫微牌卡_${key}_${timestamp}.png`;
+    const filename = `紫微牌卡_${spread}_${timestampText}.png`;
+
+    // 加入浮水印到真實容器上
+    const overlay = document.createElement("div");
+    overlay.textContent = timestampText;
+    overlay.style.position = "absolute";
+    overlay.style.right = "4px";
+    overlay.style.bottom = "4px";
+    overlay.style.fontSize = "14px";
+    overlay.style.fontWeight = "bold";
+    overlay.style.background = "rgba(255,255,255,0.85)";
+    overlay.style.padding = "4px 8px";
+    overlay.style.borderRadius = "4px";
+    overlay.style.zIndex = "99";
+    overlay.style.pointerEvents = "none";
+
+    // 設定 parent relative 以支援 overlay 定位
+    container.style.position = "relative";
+    container.appendChild(overlay);
 
     html2canvas(container, { backgroundColor: '#ffffff' })
         .then((canvas) => {
-            // 偵測 iOS Safari
             const ua = navigator.userAgent;
             const isiOS = /iP(hone|ad|od)/.test(ua);
             const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
+
             if (isiOS && isSafari) {
                 canvas.toBlob(async (blob) => {
                     const file = new File([blob], filename, { type: "image/png" });
-
-                    // 如果支援分享檔案
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
                         try {
                             await navigator.share({
@@ -450,16 +485,13 @@ function saveCardScreen() {
                                 text: "長按圖示後可「儲存影像」",
                             });
                         } catch (err) {
-                            console.warn("分享失敗，改以開新分頁", err);
                             openImageInNewTab(blob, filename);
                         }
                     } else {
-                        // 回退：開新分頁讓使用者長按
                         openImageInNewTab(blob, filename);
                     }
                 }, "image/png");
             } else {
-                // 其他瀏覽器：自動下載
                 const link = document.createElement("a");
                 link.download = filename;
                 link.href = canvas.toDataURL("image/png");
@@ -471,17 +503,21 @@ function saveCardScreen() {
         .catch((err) => {
             console.error("截圖失敗：", err);
             alert("儲存畫面失敗，請稍候再試");
+        })
+        .finally(() => {
+            container.removeChild(overlay); // 移除浮水印
         });
 
     function openImageInNewTab(blob, name) {
         const url = URL.createObjectURL(blob);
         const w = window.open();
         w.document.write(`
-      <title>長按並選「儲存影像」</title>
-      <img src="${url}" style="max-width:100%;height:auto;" alt="${name}">
-    `);
+            <title>長按並選「儲存影像」</title>
+            <img src="${url}" style="max-width:100%;height:auto;" alt="${name}">
+        `);
     }
 }
+
 
 // 頁面載入預設背面三張
 window.onload = () => showRandomContent(true);
