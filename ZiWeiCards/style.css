@@ -34,7 +34,6 @@
     border-color: #6a0dad;
 }
 
-
 /* 2. 抽牌按鈕：漸層＋懸停效果 */
 #drawBtn,
 #shuffleBtn #saveBtn {
@@ -597,10 +596,12 @@ h1 a:hover {
     margin-right: 12px;
     outline: none;
     transition: border-color .2s;
+    align-items: center;
 }
 
 .question-group #questionInput:focus {
     border-color: #6a0dad;
+    justify-content: center; 
 }
 
 /* 控制列排版 */
@@ -622,7 +623,7 @@ h1 a:hover {
 }
 .question-group {
     display: flex;
-    align-items: left;
+    align-items: center;
     gap: 8px;
 }
 
@@ -655,11 +656,9 @@ h1 a:hover {
     /* 標籤＋輸入框上下堆疊 */
     align-items: flex-start;
     margin-bottom: 1rem;
-    /* 與下方 controls 保持間距 */
 }
 
 .controls {
     display: flex;
     gap: 0.5rem;
     /* 按鈕與下拉選單左右間距 */ }
-
