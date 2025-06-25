@@ -401,12 +401,27 @@ function saveCardScreen() {
       });
   }
   
-  // 輔助：在新分頁開啟圖片，讓使用者長按儲存
-  function openForSave(canvas) {
+// 輔助：在新分頁開啟圖片，讓使用者長按儲存
+function openForSave(canvas) {
+    // 1. 先把 canvas 轉成 DataURL
     const dataUrl = canvas.toDataURL("image/png");
-    // iOS Safari 通常會直接顯示圖片，長按可存到相簿
-    window.open(dataUrl, "_blank");
-  }
   
+    // 2. 建立一段最簡 HTML，只有一張全寬圖片
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+        <body style="margin:0;display:flex;justify-content:center;align-items:center;background:#fff;">
+          <img src="${dataUrl}" style="max-width:100%;height:auto;">
+        </body>
+      </html>`;
+  
+    // 3. 用 Blob 包成一個 HTML 檔
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+  
+    // 4. 開啟這個 Blob URL（Safari 會把它當網頁載入，長按就能存圖）
+    window.open(url, "_blank");
+  }
 
 window.onload = () => showRandomContent(true);
