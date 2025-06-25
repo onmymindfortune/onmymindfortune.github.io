@@ -333,14 +333,17 @@ function shufflePreview() {
     playShuffleAnimation(container, () => showRandomContent(true));
   }
 
-function saveCardScreen() {
+  function saveCardScreen() {
+    // 選出正確的容器
     const key = document.getElementById("spreadSelector").value;
     const container = key === "twelve"
       ? document.getElementById("twelveContainer")
       : document.getElementById("cardContainer");
   
-    // 決定時間戳
+    // 決定要用哪個時間：抽牌時間 or 現在時間
     const dateObj = lastDrawTimestamp || new Date();
+  
+    // 自訂格式：YYYYMMDD_HHMMSS
     const pad = n => n.toString().padStart(2, '0');
     const yyyy = dateObj.getFullYear();
     const MM   = pad(dateObj.getMonth() + 1);
@@ -349,8 +352,7 @@ function saveCardScreen() {
     const mm   = pad(dateObj.getMinutes());
     const ss   = pad(dateObj.getSeconds());
     const timestamp = `${yyyy}${MM}${dd}_${hh}${mm}${ss}`;
-
-    
+  
     var spread = ""
     if (key === "single")
         spread = "一張牌陣"
@@ -366,62 +368,21 @@ function saveCardScreen() {
         spread = "十二宮位大牌陣"
 
     const filename = `紫微牌卡_${spread}_${timestamp}.png`;
-  
+
+    // 截圖並下載
     html2canvas(container, { backgroundColor: null })
       .then(canvas => {
-        // 先嘗試 Web Share API（部分手機支援直接分享到相簿）
-        if (navigator.canShare && navigator.canShare({ files: [] })) {
-          canvas.toBlob(blob => {
-            const file = new File([blob], filename, { type: 'image/png' });
-            navigator.share({
-              files: [file],
-              title: filename
-            })
-            .catch(err => {
-              // 若使用者取消分享，就 fallback
-              openForSave(canvas, filename);
-            });
-          }, 'image/png');
-        }
-        // iOS Safari / Android Chrome 可直接打開圖片長按儲存
-        else if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          openForSave(canvas);
-        }
-        // 其餘桌機環境：自動下載
-        else {
-          const link = document.createElement("a");
-          link.download = filename;
-          link.href = canvas.toDataURL("image/png");
-          link.click();
-        }
+        const link = document.createElement("a");
+        link.download = filename;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
       })
       .catch(err => {
         console.error("截圖失敗：", err);
-        alert("儲存畫面失敗，請稍後再試");
+        alert("儲存畫面失敗，請稍候再試");
       });
   }
   
-// 輔助：在新分頁開啟圖片，讓使用者長按儲存
-function openForSave(canvas) {
-  const dataUrl = canvas.toDataURL("image/png");
-  const html = `...`; // 同上
-  const blob = new Blob([html], { type: "text/html" });
-  const url  = URL.createObjectURL(blob);
-  const isIOS = /iP(ad|hone|od).*WebKit/.test(navigator.userAgent);
-
-  if (!isIOS) {
-    window.open(url,"_blank");
-  }
-  // 無論 iOS 或其他裝置，都在畫面上放一個手動連結備援
-  const manual = document.createElement("div");
-  manual.innerHTML = `
-    <a href="${url}" target="_blank" style="
-      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-      background:#fff;color:#333;padding:8px 16px;border-radius:4px;
-      box-shadow:0 2px 6px rgba(0,0,0,0.2);z-index:9999;
-    ">點此打開圖片並長按儲存</a>`;
-  document.body.appendChild(manual);
-}
 
 
 window.onload = () => showRandomContent(true);
