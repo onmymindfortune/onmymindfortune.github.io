@@ -1,12 +1,18 @@
 /* 1. 控制區塊：選單＋按鈕水平置中 */
-.control-bar {
+.control-bar{
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
 }
+.control-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0;
+}
 
-.control-bar label {
+.control-bar label{
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 1.1rem;
     margin-right: 8px;
@@ -581,19 +587,19 @@ h1 a:hover {
 }
 
 /* 問題輸入欄樣式 */
-.control-bar #questionInput {
+.question-group #questionInput {
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 1rem;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 200px;
+    width: 285px;
     margin-right: 12px;
     outline: none;
     transition: border-color .2s;
 }
 
-.control-bar #questionInput:focus {
+.question-group #questionInput:focus {
     border-color: #6a0dad;
 }
 
@@ -614,25 +620,16 @@ h1 a:hover {
     align-items: center;
     gap: 8px;
 }
+.question-group {
+    display: flex;
+    align-items: left;
+    gap: 8px;
+}
 
 .control-bar .btn-group button {
     margin-left: 4px;
 }
 
-/* 問題輸入欄樣式 */
-.control-bar #questionInput {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1rem;
-    padding: 6px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 200px;
-    transition: border-color .2s;
-}
-
-.control-bar #questionInput:focus {
-    border-color: #6a0dad;
-}
 
 /* 牌面容器：置中並設定水平間距 */
 .cards-container {
@@ -652,3 +649,17 @@ h1 a:hover {
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.control-bar {
+    display: flex;
+    flex-direction: column;
+    /* 標籤＋輸入框上下堆疊 */
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    /* 與下方 controls 保持間距 */
+}
+
+.controls {
+    display: flex;
+    gap: 0.5rem;
+    /* 按鈕與下拉選單左右間距 */ }
+
