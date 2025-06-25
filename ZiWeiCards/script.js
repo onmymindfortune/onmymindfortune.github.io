@@ -431,7 +431,7 @@ function saveCardScreen() {
         spread = "十二宮位大牌陣"
     const filename = `紫微牌卡_${key}_${timestamp}.png`;
 
-    html2canvas(container, { backgroundColor: null })
+    html2canvas(container, { backgroundColor: '#ffffff' })
         .then((canvas) => {
             // 偵測 iOS Safari
             const ua = navigator.userAgent;
