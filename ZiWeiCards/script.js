@@ -528,7 +528,7 @@ function saveCardScreen() {
               await navigator.share({
                 files: [file],
                 title: "紫微牌卡 圖片",
-                text: "長按圖示後可「儲存影像」",
+                text: "",
               });
             } catch (err) {
               openImageInNewTab(blob, filename);
