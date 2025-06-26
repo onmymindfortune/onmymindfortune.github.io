@@ -527,7 +527,7 @@ function saveCardScreen() {
             try {
               await navigator.share({
                 files: [file],
-                title: "紫微牌卡 圖片",
+                title: "",
                 text: "",
               });
             } catch (err) {
