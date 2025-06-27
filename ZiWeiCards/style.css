@@ -593,7 +593,7 @@ h1 a:hover {
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 285px;
+    width: 373px;
     margin-right: 12px;
     outline: none;
     transition: border-color .2s;
@@ -678,47 +678,3 @@ h1 a:hover {
     /* border: 2px solid rgb(0, 0, 255);
     border-radius: 40px; */
 }
-
-
-
-
-
-/* 手機螢幕樣式調整 768px */
-@media screen and (max-width: 5768px) {
-        /* 確保各個控制群組正確排列 */
-        .control-bar .question-group,
-        .control-bar .select-group,
-        .control-bar .btn-group {
-            display: flex;
-            /* 讓組內的標籤和輸入框/按鈕水平排列 */
-            align-items: center;
-            /* 垂直置中組內項目 */
-            gap: 8px;
-            /* 組內項目之間的間距 */
-            /* 讓這些組佔滿可用寬度，以便它們能單獨成列 */
-            width: 100%;
-            justify-content: center;
-            /* 將組內容水平置中 */
-        }
-    
-        /* 調整按鈕組的間距 */
-        .control-bar .btn-group {
-            /* 移除 btn-group 內部按鈕的額外 margin-left */
-            /* 因為我們已經使用 gap 處理了按鈕間距 */
-            gap: 10px;
-            /* 按鈕之間的間距 */
-        }
-    
-        .control-bar .btn-group button {
-            margin-left: 0;
-            /* 移除原本的 margin-left */
-        }
-    
-        /* 確保分隔線的樣式 */
-        .divider {
-            margin: 0 5px;
-            /* 調整分隔線左右間距 */
-            font-size: 20px;
-            color: #aaa;
-        }
-} 
