@@ -39,37 +39,35 @@
             <input type="text" id="questionInput" class="form-control" placeholder="請輸入問題" />
         </div>
 
-        <div class="control-group">
-            <div class="select-group">
-                <label for="spreadSelector">選擇牌陣：</label>
-                <select id="spreadSelector" onchange="showRandomContent(true)">
-                    <option value="single">【一張】牌陣 (1主星牌)</option>
-                    <option value="two">【二張】牌陣 (1主+1輔)</option>
-                    <option value="basicThree" selected>【三張】基礎牌陣 (1主+1輔+1長)</option>
-                    <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
-                    <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
-                    <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)</option>
-                </select>
-
-            </div>
-            <div class="btn-group">
-                <button id="drawBtn" onclick="showRandomContent()">抽牌</button>
-                <span class="divider">｜</span>
-                <button id="shuffleBtn" onclick="shufflePreview()">洗牌</button>
-                <span class="divider">｜</span>
-                <button id="saveBtn" onclick="saveCardScreen()">儲存牌面</button>
-            </div>
+        <div class="select-group">
+            <label for="spreadSelector">選擇牌陣：</label>
+            <select id="spreadSelector" onchange="showRandomContent(true)">
+                <option value="single">【一張】牌陣 (1主星牌)</option>
+                <option value="two">【二張】牌陣 (1主+1輔)</option>
+                <option value="basicThree" selected>【三張】基礎牌陣 (1主+1輔+1長)</option>
+                <option value="opposition">【對宮】牌陣 (2主+2輔+1長)</option>
+                <option value="threeFour">【三方四正】牌陣 (4主+4輔+1長)</option>
+                <option value="twelve">【十二宮位】大牌陣 (13主+12輔+1長)</option>
+            </select>
         </div>
-    </div>
+
+        <div class="btn-group">
+            <button id="drawBtn" onclick="showRandomContent()">抽牌</button>
+            <span class="divider">｜</span>
+            <button id="shuffleBtn" onclick="shufflePreview()">洗牌</button>
+            <span class="divider">｜</span>
+            <button id="saveBtn" onclick="saveCardScreen()">儲存牌面</button>
+        </div>
     </div>
 
     <!-- 抽牌時間顯示 -->
-    <div id="drawTimeDisplay" style="margin-top: 12px; font-size: 14px; font-weight: bold;"></div>
+    <div id="drawTimeDisplay" style="margin-top: 12px; font-size: 24px; font-weight: bold;"></div>
 
     <!-- 卡片容器 -->
     <div class="card-wrapper">
         <div id="cardContainer" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0;"></div>
         <div id="twelveContainer" style="display: none;">
+            <script src="script.js"></script>
         </div>
     </div>
 
