@@ -278,6 +278,52 @@ function showRandomContent(isBackside = false) {
 
   // 根據牌陣組卡（共用邏輯）
   if (key === "twelve") {
+    // 定義十二宮位名稱，順序對應 pos1 到 pos12
+    let palaceNames; // 先宣告最終的宮位名稱陣列
+
+    // 只有在抽牌時才執行宮位排序邏輯
+    if (!isBackside) {
+      // --- 開始新的「隨機命宮起點」邏輯 ---
+
+      // 1. 定義十二宮位固定的逆時針順序
+      const orderedPalaces = [
+        "命",
+        "父",
+        "福",
+        "田",
+        "官",
+        "僕",
+        "遷",
+        "疾",
+        "財",
+        "子",
+        "夫",
+        "兄",
+      ];
+
+      // 2. 定義盤面上十二個位置(pos)的逆時針路徑
+      //    這個陣列中的數字代表迴圈的索引 `i`，它對應到盤面上從「子」位開始的逆時針順序
+      const ccwPosOrder = [9, 8, 6, 10, 1, 2, 3, 4, 5, 7, 11, 0];
+
+      // 3. 隨機選擇一個起始位置 (0-11)，作為「命宮」的起點
+      const randomStartIndex = Math.floor(Math.random() * 12);
+
+      // 4. 根據隨機起點，生成最終的宮位順序陣列
+      const finalPalaceOrder = new Array(12);
+      for (let i = 0; i < 12; i++) {
+        // 從固定的宮位順序中取出宮位 (命、兄、夫...)
+        const palace = orderedPalaces[i];
+        // 根據隨機起點，從逆時針路徑中找到該宮位應該放置的位置索引
+        const posIndex = ccwPosOrder[(randomStartIndex + i) % 12];
+        // 將宮位名稱存入最終陣列的正確位置
+        finalPalaceOrder[posIndex] = palace;
+      }
+      palaceNames = finalPalaceOrder;
+    } else {
+      // 在洗牌預覽模式下，建立一個空陣列即可
+      palaceNames = new Array(12).fill("\n\n__");
+    }
+
     for (let i = 0; i < 12; i++) {
       const g = document.createElement("div");
       g.className = `group group-pos pos${i + 1}`;
@@ -291,6 +337,19 @@ function showRandomContent(isBackside = false) {
         isBackside ? "Common" : "2Support",
         isBackside ? backCard : sups[i]
       );
+
+      // 如果不是顯示牌背，則新增宮位名稱標籤
+      const label = document.createElement("div");
+      label.className = "palace-label";
+      label.textContent = palaceNames[i] + "";
+      g.appendChild(label);
+      //   if (!isBackside) {
+      //     const label = document.createElement("div");
+      //     label.className = "palace-label";
+      //     label.textContent = palaceNames[i];
+      //     g.appendChild(label);
+      //   }
+
       container.append(g);
     }
     const cm = document.createElement("div");
@@ -560,10 +619,13 @@ function saveCardScreen() {
     const url = URL.createObjectURL(blob);
     const w = window.open();
     w.document.write(`
-            <img src="${url}" style="max-width:100%;height:auto;" alt="${name}">
-        `);
+              <img src="${url}" style="max-width:100%;height:auto;" alt="${name}">
+          `);
   }
 }
 
 // 頁面載入預設背面三張
-window.onload = () => showRandomContent(true);
+// window.onload = () => showRandomContent(true);
+window.onload = () => {
+  showRandomContent(true);
+};
