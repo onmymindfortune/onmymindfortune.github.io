@@ -1,3 +1,21 @@
+.control-bar .question-group,
+.control-bar .select-group,
+.control-bar .btn-group {
+    display: flex;
+    /* 讓組內的標籤和輸入框/按鈕水平排列 */
+    align-items: center;
+    /* 垂直置中組內項目 */
+    gap: 8px;
+    /* 組內項目之間的間距 */
+    /* 讓這些組佔滿可用寬度，以便它們能單獨成列 */
+    width: 100%;
+    justify-content: center;
+    /* 將組內容水平置中 */
+}
+
+
+
+
 /* 1. 控制區塊：選單＋按鈕水平置中 */
 .control-bar {
     display: flex;
