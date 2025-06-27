@@ -15,14 +15,14 @@
 
 .control-bar label {
     font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     margin-right: 8px;
     color: #444;
 }
 
 .control-bar select {
     font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1rem;
+    font-size: 1.3rem;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -39,7 +39,6 @@
 #drawBtn,
 #shuffleBtn #saveBtn {
     font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1rem;
     padding: 8px 16px;
 
     color: #fff;
@@ -66,7 +65,7 @@ button {
     border: none;
     border-radius: 4px;
     padding: 8px 16px;
-    font-size: 1rem;
+    font-size: 1.6rem;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: tranmargin-left: 8px;
@@ -207,7 +206,7 @@ h1 a:hover {
 .card p {
     text-align: center;
     margin: 8px 0 0;
-    font-size: 14px;
+    font-size: 1.6rem;
     white-space: pre-line;
 }
 
@@ -252,7 +251,7 @@ h1 a:hover {
 #cardContainer.single p,
 #cardContainer.two p,
 #cardContainer.basicThree p {
-    font-size: 30px;
+    font-size: 1.8rem;
 }
 
 #cardContainer.two,
@@ -304,7 +303,7 @@ h1 a:hover {
 }
 
 #cardContainer.opposition p {
-    font-size: 25px;
+    font-size: 1.8rem;
 }
 
 
@@ -334,7 +333,7 @@ h1 a:hover {
 }
 
 #cardContainer.threeFour p {
-    font-size: 25px;
+    font-size: 1.8rem;
 }
 
 #cardContainer.threeFour .group-top {
@@ -481,14 +480,14 @@ h1 a:hover {
 }
 
 #twelveContainer.twelve .group-pos p {
-    font-size: 20px;
+    font-size: 1.4rem;
 }
 
 #twelveContainer.twelve .center-main p,
 #twelveContainer.twelve .center-life p {
     text-align: center;
     margin: 8px 0 0;
-    font-size: 30px;
+    font-size: 1.8rem;
     white-space: pre-line;
 }
 
@@ -590,7 +589,7 @@ h1 a:hover {
 /* 問題輸入欄樣式 */
 .question-group #questionInput {
     font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1rem;
+    font-size: 1.3rem;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -679,3 +678,47 @@ h1 a:hover {
     /* border: 2px solid rgb(0, 0, 255);
     border-radius: 40px; */
 }
+
+
+
+
+
+/* 手機螢幕樣式調整 768px */
+@media screen and (max-width: 5768px) {
+        /* 確保各個控制群組正確排列 */
+        .control-bar .question-group,
+        .control-bar .select-group,
+        .control-bar .btn-group {
+            display: flex;
+            /* 讓組內的標籤和輸入框/按鈕水平排列 */
+            align-items: center;
+            /* 垂直置中組內項目 */
+            gap: 8px;
+            /* 組內項目之間的間距 */
+            /* 讓這些組佔滿可用寬度，以便它們能單獨成列 */
+            width: 100%;
+            justify-content: center;
+            /* 將組內容水平置中 */
+        }
+    
+        /* 調整按鈕組的間距 */
+        .control-bar .btn-group {
+            /* 移除 btn-group 內部按鈕的額外 margin-left */
+            /* 因為我們已經使用 gap 處理了按鈕間距 */
+            gap: 10px;
+            /* 按鈕之間的間距 */
+        }
+    
+        .control-bar .btn-group button {
+            margin-left: 0;
+            /* 移除原本的 margin-left */
+        }
+    
+        /* 確保分隔線的樣式 */
+        .divider {
+            margin: 0 5px;
+            /* 調整分隔線左右間距 */
+            font-size: 20px;
+            color: #aaa;
+        }
+} 
